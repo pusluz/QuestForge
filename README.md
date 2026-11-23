@@ -6,7 +6,7 @@ A Meta Quest companion prototype with an amber-on-black interface, a liquid-glas
 
 - **App manager:** lists launcher-visible apps, opens them, and sends uninstall requests to Android's confirmation screen.
 - **APK install:** choose a local APK and continue through Android's own installer and unknown-app permission screens.
-- **Mod archive import:** choose a destination with Android's folder picker, then install a ZIP archive there. Existing files are backed up in `Zyng Backups`; unsafe archive paths are skipped.
+- **Mod archive import:** choose a destination with Android's folder picker, then install a ZIP archive there. Existing files are backed up in a `Zyng Backups` folder; unsafe archive paths are skipped.
 - **Device tools:** opens Android settings. Zyng does not silently change device settings or bypass Android access restrictions.
 - **Interface:** overview, app manager, mods and files, device tools, and settings screens, designed for a wide Quest window and narrower layouts.
 
@@ -16,7 +16,7 @@ Android decides which apps and folders Zyng can access. Newer Android versions m
 
 ## Get the APK
 
-The GitHub Actions workflow builds a debug APK on pushes to `main`. Open **Actions → Build Zyng APK → latest successful run → Artifacts → zyng-debug-apk** to download it. The first workflow run also removes the old `QuestForge.zip` archive.
+The old `QuestForge.zip` archive has been removed. GitHub Actions builds a debug APK on pushes to `main`. Open **Actions → Build Zyng APK → latest successful run → Artifacts → zyng-debug-apk** to download it.
 
 To build locally, use Java 17 and Gradle 8.7, then run:
 
