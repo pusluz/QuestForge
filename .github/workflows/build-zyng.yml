@@ -2,11 +2,11 @@ name: Build Zyng APK
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: \[main\]
+  workflow\_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -14,39 +14,31 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
-      - name: Remove old archive
-        run: |
-          if [ -f QuestForge.zip ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git rm QuestForge.zip
-            git commit -m "Remove old QuestForge archive"
-            git push
-          fi
+```
+  - name: Set up Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: "17"
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
+  - name: Set up Android SDK
+    uses: android-actions/setup-android@v3
+    with:
+      packages: platform-tools
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+  - name: Set up Gradle
+    uses: gradle/actions/setup-gradle@v4
+    with:
+      gradle-version: "8.7"
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.7"
+  - name: Build debug APK
+    run: gradle --no-daemon assembleDebug
 
-      - name: Build debug APK
-        run: gradle --no-daemon assembleDebug
-
-      - name: Save APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: zyng-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+  - name: Save APK artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: zyng-debug-apk
+      path: app/build/outputs/apk/debug/app-debug.apk
+      if-no-files-found: error
+```
